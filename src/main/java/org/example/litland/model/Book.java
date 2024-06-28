@@ -3,29 +3,29 @@ package org.example.litland.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
-@Table(name = "BOOKS")
 @Data
 public class Book {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
+    private String name = ""; // required
 
-    private Language language;
+    private Language language = Language.RU; // required
 
     private Integer pages;
 
-    private Float price;
+    private Float price = 0f; // required
 
     private String ISBNNumber;
 
     private Boolean isNew;
 
-    private Integer storageAmount;
+    private Integer storageAmount = 0; // required
 
     private String description = "";
 
@@ -33,7 +33,7 @@ public class Book {
 
     private String coverName;
 
-    private Integer publicationYear;
+    private Integer publicationYear = Calendar.getInstance().get(Calendar.YEAR); // required
 
     private Float rating;
 
@@ -41,7 +41,7 @@ public class Book {
 
     private String genre;
 
-    private String authors;
+    private String authors = ""; // required
 
 //    @ManyToOne(targetEntity = Publisher.class)
 //    private Publisher publisher;

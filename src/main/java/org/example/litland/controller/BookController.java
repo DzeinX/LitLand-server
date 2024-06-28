@@ -2,6 +2,9 @@ package org.example.litland.controller;
 
 import org.example.litland.model.Book;
 import org.example.litland.repository.BookRepository;
+import org.example.litland.response.BookResponse;
+import org.example.litland.service.BookToClientService;
+import org.example.litland.shell.BookShell;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,22 +12,22 @@ import java.util.List;
 @RestController
 @RequestMapping
 public class BookController {
-    private final BookRepository bookRepository;
+    private final BookToClientService bookToClientService;
 
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookController(BookToClientService bookToClientService) {
+        this.bookToClientService = bookToClientService;
     }
 
     @GetMapping("/")
     @CrossOrigin(origins = "http://localhost:3000")
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<BookShell> getAllBooks() {
+        return bookToClientService.getAllBooksToClient();
     }
 
-    @PostMapping("/add-book")
+    @GetMapping("/book/{hash}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public Book addBook(@RequestBody Book book) {
-        return bookRepository.save(book);
+    public BookResponse getBookByHash(@PathVariable String hash) {
+        return bookToClientService.getBookToClientFromHash(hash);
     }
 }

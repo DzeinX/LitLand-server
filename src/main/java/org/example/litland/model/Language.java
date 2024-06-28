@@ -1,5 +1,5 @@
 package org.example.litland.model;
 
 public enum Language {
-    RU, US, UK, FR, GR
+    RU, EN, UK, FR, GR
 }
