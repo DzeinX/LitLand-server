@@ -1,33 +1,29 @@
 package org.example.litland.shell;
 
+
 import lombok.Data;
 import org.example.litland.model.Language;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class BookShell {
-    private String hash; // аналог id
+public class BookFromClientShell {
+    private String name; // required
 
-    private String name;
-
-    private Language language;
+    private Language language; // required
 
     private Integer pages;
 
-    private Float price;
+    private Float price; // required
 
     private String ISBNNumber;
 
     private Boolean isNew;
 
-    private Integer storageStatus; // аналог hash
+    private Integer storageAmount; // required
 
     private String description;
 
     private Integer publicationYear;
-
-    private String coverName;
-
-    private Boolean isDigital;
 
     private Float rating;
 
@@ -35,5 +31,5 @@ public class BookShell {
 
     private String genre;
 
-    private String authors;
+    private String authors; // required
 }

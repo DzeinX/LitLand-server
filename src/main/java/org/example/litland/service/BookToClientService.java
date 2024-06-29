@@ -25,7 +25,7 @@ public class BookToClientService {
     }
 
     private int getStorageAmountCode(Integer storageAmount) {
-        if (storageAmount == null) return 0;
+        if (storageAmount == null) return -1;
 
         if (storageAmount < 1) {
             return 0; // "Товар закончился"
@@ -53,6 +53,9 @@ public class BookToClientService {
         bookShell.setPublisher(book.getPublisher());
         bookShell.setGenre(book.getGenre());
         bookShell.setAuthors(book.getAuthors());
+        bookShell.setCoverName(book.getCoverName());
+
+        bookShell.setIsDigital(book.getFileName() != null);
 
         return bookShell;
     }

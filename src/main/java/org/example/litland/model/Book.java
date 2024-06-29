@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Calendar;
-import java.util.List;
 
 @Entity
 @Data
@@ -29,16 +28,15 @@ public class Book {
 
     private Boolean isNew;
 
-    @Column(nullable = false)
-    private Integer storageAmount = 0; // required
+    private Integer storageAmount;
 
-    @Column(length = 65535)
+    @Column(length = 100)
     private String description = "";
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String fileName;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String coverName;
 
     @Column(nullable = false)
