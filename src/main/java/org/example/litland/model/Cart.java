@@ -19,5 +19,7 @@ public class Cart {
     @ManyToOne(targetEntity = User.class)
     private User user;
 
-    private int status;
+    private int amount = 1;
+
+    private CartStatus status;
 }

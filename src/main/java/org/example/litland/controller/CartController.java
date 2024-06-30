@@ -1,11 +1,11 @@
 package org.example.litland.controller;
 
+import org.example.litland.response.BookCartResponse;
 import org.example.litland.service.CartService;
+import org.example.litland.shell.BookCartShell;
+import org.example.litland.shell.BookInfoForCart;
 import org.example.litland.shell.BookShell;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +20,36 @@ public class CartController {
 
     @GetMapping
     @CrossOrigin(origins = "http://localhost:3000")
-    public List<BookShell> getCartBooks() {
+    public List<BookCartShell> getCartBooks() {
         String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять
         return cartService.getAllByUser(userHash);
+    }
+
+    @PostMapping("/add-new")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public BookCartResponse addNewBookInCart(@RequestBody BookInfoForCart bookInfoForCart) {
+        String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять
+        return cartService.addNewBook(userHash, bookInfoForCart.getHash());
+    }
+
+    @PostMapping("/add-one")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public BookCartResponse addOneBookInCart(@RequestBody BookInfoForCart bookInfoForCart) {
+        String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять
+        return cartService.addOneBook(userHash, bookInfoForCart.getHash());
+    }
+
+    @PostMapping("/remove-one")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public BookCartResponse removeOneBookFromTheCart(@RequestBody BookInfoForCart bookInfoForCart) {
+        String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять
+        return cartService.removeOneBook(userHash, bookInfoForCart.getHash());
+    }
+
+    @PostMapping("/remove")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public BookCartResponse removeBookFromTheCart(@RequestBody BookInfoForCart bookInfoForCart) {
+        String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять
+        return cartService.removeBook(userHash, bookInfoForCart.getHash());
     }
 }

@@ -3,7 +3,6 @@ package org.example.litland.shell;
 
 import lombok.Data;
 import org.example.litland.model.Language;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class BookFromClientShell {
