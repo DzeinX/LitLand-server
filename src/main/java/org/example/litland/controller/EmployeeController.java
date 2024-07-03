@@ -17,11 +17,6 @@ public class EmployeeController {
         this.createBookFromClientService = createBookFromClientService;
     }
 
-    @GetMapping
-    public void employee() {
-
-    }
-
     @PostMapping("/add-book")
     @CrossOrigin(origins = "http://localhost:3000")
     public CreateBookResponse addBook(@RequestBody BookFromClientShell book) {

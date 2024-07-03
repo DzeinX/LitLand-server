@@ -44,10 +44,6 @@ public class Book {
 
     private Float rating;
 
-//    private String publisher;
-
-//    private String genre;
-
     @Column(nullable = false)
     private String authors = ""; // required
 
@@ -56,7 +52,7 @@ public class Book {
 
     @ManyToOne(targetEntity = Genre.class)
     private Genre genre;
-//
+
 //    @ManyToMany
 //    @JoinTable(name = "authors_books", joinColumns = @JoinColumn(name = "books_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 //    List<Author> authors;

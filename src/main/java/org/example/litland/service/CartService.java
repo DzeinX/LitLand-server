@@ -19,16 +19,13 @@ import java.util.Optional;
 
 @Service
 public class CartService {
-    private final BookToClientService bookToClientService;
     private final CartRepository cartRepository;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
-    public CartService(BookToClientService bookToClientService,
-                       CartRepository cartRepository,
+    public CartService(CartRepository cartRepository,
                        BookRepository bookRepository,
                        UserRepository userRepository) {
-        this.bookToClientService = bookToClientService;
         this.cartRepository = cartRepository;
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;

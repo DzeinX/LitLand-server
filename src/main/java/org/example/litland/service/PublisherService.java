@@ -1,10 +1,7 @@
 package org.example.litland.service;
 
-import org.example.litland.model.Genre;
 import org.example.litland.model.Publisher;
-import org.example.litland.repository.GenreRepository;
 import org.example.litland.repository.PublisherRepository;
-import org.example.litland.shell.GenreShell;
 import org.example.litland.shell.PublisherShell;
 import org.springframework.stereotype.Service;
 

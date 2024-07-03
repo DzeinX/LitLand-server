@@ -1,10 +1,11 @@
 package org.example.litland.service;
 
 import org.example.litland.model.Book;
-import org.example.litland.model.Genre;
 import org.example.litland.repository.BookRepository;
 import org.example.litland.repository.GenreRepository;
+import org.example.litland.response.AmountBookPagesResponse;
 import org.example.litland.response.BookResponse;
+import org.example.litland.response.PaginatedBooksResponse;
 import org.example.litland.shell.BookShell;
 import org.example.litland.shell.GenreShell;
 import org.example.litland.shell.PublisherShell;
@@ -21,11 +22,9 @@ public class BookToClientService {
     private final BookRepository bookRepository;
 
     private final String SECRET_VALUE = "jhlska8275098hshd00827"; // TODO 1 - закодировать с помощью SECRET_VALUE
-    private final GenreRepository genreRepository;
 
-    public BookToClientService(BookRepository bookRepository, GenreRepository genreRepository) {
+    public BookToClientService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-        this.genreRepository = genreRepository;
     }
 
     public boolean checkIfExist(Long id) {
@@ -68,28 +67,22 @@ public class BookToClientService {
         return bookShell;
     }
 
-    public List<BookShell> getAllBooksToClient() {
-        List<BookShell> bookShells = new ArrayList<>();
-        bookRepository.findAll().forEach(book -> {
-            bookShells.add(getBookShellFromBookEntity(book));
-        });
-
-        return bookShells;
-    }
-
-    public List<BookShell> getAllBooksToClientPaginated(int number, int size) {
+    public PaginatedBooksResponse getAllBooksToClientPaginated(int number, int size) {
+        if (size <= 0) return new PaginatedBooksResponse(new ArrayList<>(), "Размер страницы меньше еденицы", "SIZE_PAGE_LESS_THEN_ONE");
         List<BookShell> bookShells = new ArrayList<>();
         Pageable page = PageRequest.of(number, size);
         bookRepository.findAll(page).forEach(book -> {
             bookShells.add(getBookShellFromBookEntity(book));
         });
 
-        return bookShells;
+        return new PaginatedBooksResponse(bookShells, "", "SUCCESS");
     }
 
-    public int getBooksAmountPages(int size) {
+    public AmountBookPagesResponse getBooksAmountPages(int size) {
+        if (size <= 0) return new AmountBookPagesResponse(null, "Размер страницы меньше еденицы", "SIZE_PAGE_LESS_THEN_ONE");
         Pageable page = PageRequest.of(0, size);
-        return bookRepository.findAll(page).getTotalPages();
+        Integer totalPages = bookRepository.findAll(page).getTotalPages();
+        return new AmountBookPagesResponse(totalPages, "", "SUCCESS");
     }
 
     public BookResponse getBookToClientFromHash(String Hash) {
