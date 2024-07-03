@@ -8,6 +8,8 @@ import org.example.litland.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Random;
+
 @SpringBootApplication
 public class LitLandApplication {
     private static UserRepository userRepository;
@@ -28,22 +30,55 @@ public class LitLandApplication {
     public static void main(String[] args) {
         SpringApplication.run(LitLandApplication.class, args);
 
-        addFirstUser();
+        addUser("LitLand", "LitLand");
+        addUser("LitLand2", "LitLand2");
         Genre genre1 = addGenre("Психология");
         Genre genre2 = addGenre("Наука");
-        Genre genre3 = addGenre("Фентази");
+        Genre genre3 = addGenre("Художественная литература");
+
         Publisher publisher1 = addPublisher("Арма");
-        Publisher publisher2 = addPublisher("Цыфра");
-        addFirstBook(genre1, publisher2);
-        addFirstBook(genre2, publisher1);
-        addFirstBook(genre3, publisher1);
+        Publisher publisher2 = addPublisher("Синдбад");
+
+        for (int i = 0; i < 10; i++) {
+            addBook((i + 1) + " Книга",
+                    "Описние книги",
+                    Language.RU,
+                    1490f - new Random().nextInt(1000),
+                    30 * (i + 1) - new Random().nextInt(10),
+                    true,
+                    100 - new Random().nextInt(100),
+                    2024 - new Random().nextInt(10),
+                    10f - new Random().nextInt(5),
+                    "9090-9090-90-9",
+                    "автор книги",
+                    i % 2 == 0 ? "default.png" : "book_4.jpg",
+                    genre1,
+                    publisher1
+            );
+        }
+
+        addBook("После бури",
+                "«После бури» – заключительная часть трилогии о жителях двух соперничающих хоккейных городов.",
+                Language.RU,
+                449f,
+                300,
+                true,
+                30,
+                2024,
+                9f,
+                "978-5-00131-586-5",
+                "Фредрик Бакман",
+                "book_2.jpg",
+                genre3,
+                publisher2
+        );
 
     }
 
-    private static void addFirstUser() {
+    private static void addUser(String username, String password) {
         User user = new User();
-        user.setUsername("LitLand");
-        user.setPassword("LitLand");
+        user.setUsername(username);
+        user.setPassword(password);
         userRepository.save(user);
     }
 
@@ -59,22 +94,36 @@ public class LitLandApplication {
         return publisherRepository.save(publisher);
     }
 
-    private static void addFirstBook(Genre genre, Publisher publisher) {
+    private static void addBook(String name,
+                                     String description,
+                                     Language language,
+                                     Float price,
+                                     Integer pages,
+                                     Boolean isNew,
+                                     Integer storageAmount,
+                                     Integer publicationYear,
+                                     Float rating,
+                                     String ISBNNumber,
+                                     String authors,
+                                     String coverName,
+                                     Genre genre,
+                                     Publisher publisher
+    ) {
         Book book = new Book();
-        book.setName("Убийства и кексики. Детективное агентство «Благотворительный магазин»");
-        book.setDescription("описние книги");
-        book.setLanguage(Language.RU);
-        book.setPrice(349f);
-        book.setPages(30);
-        book.setIsNew(true);
-        book.setStorageAmount(3);
-        book.setPublicationYear(2024);
-        book.setRating(10f);
-        book.setISBNNumber("9090-9090-90-9");
-        book.setAuthors("автор книги");
+        book.setName(name);
+        book.setDescription(description);
+        book.setLanguage(language);
+        book.setPrice(price);
+        book.setPages(pages);
+        book.setIsNew(isNew);
+        book.setStorageAmount(storageAmount);
+        book.setPublicationYear(publicationYear);
+        book.setRating(rating);
+        book.setISBNNumber(ISBNNumber);
+        book.setAuthors(authors);
         book.setPublisher(publisher);
         book.setGenre(genre);
-        book.setCoverName("book_1.ico");
+        book.setCoverName(coverName);
         bookRepository.save(book);
     }
 
