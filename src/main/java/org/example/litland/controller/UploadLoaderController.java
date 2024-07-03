@@ -17,7 +17,7 @@ public class UploadLoaderController {
         this.fileStorageCoversService = fileStorageCoversService;
     }
 
-    @PostMapping("/image/{imageName}")
+    @GetMapping("/image/{imageName}")
     @CrossOrigin(origins = "http://localhost:3000")
     public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {
         File serverFile = fileStorageCoversService.load(imageName);

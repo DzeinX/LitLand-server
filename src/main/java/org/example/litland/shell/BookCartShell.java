@@ -11,4 +11,5 @@ public class BookCartShell {
     private String authors;
     private Integer amount;
     private Float price;
+    private String coverName;
 }

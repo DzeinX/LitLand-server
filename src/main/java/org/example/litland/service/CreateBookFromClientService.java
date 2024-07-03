@@ -1,7 +1,11 @@
 package org.example.litland.service;
 
 import org.example.litland.model.Book;
+import org.example.litland.model.Genre;
+import org.example.litland.model.Publisher;
 import org.example.litland.repository.BookRepository;
+import org.example.litland.repository.GenreRepository;
+import org.example.litland.repository.PublisherRepository;
 import org.example.litland.response.CreateBookResponse;
 import org.example.litland.response.SaveCoverResponse;
 import org.example.litland.response.SaveFileResponse;
@@ -15,11 +19,18 @@ import java.util.Optional;
 @Service
 public class CreateBookFromClientService {
     private final BookRepository bookRepository;
+    private final GenreRepository genreRepository;
     private final FileStorageBookService fileStorageBookService;
-    
-    public CreateBookFromClientService(BookRepository bookRepository, FileStorageBookService fileStorageBookService) {
+    private final PublisherRepository publisherRepository;
+
+    public CreateBookFromClientService(BookRepository bookRepository,
+                                       FileStorageBookService fileStorageBookService,
+                                       GenreRepository genreRepository,
+                                       PublisherRepository publisherRepository) {
         this.bookRepository = bookRepository;
         this.fileStorageBookService = fileStorageBookService;
+        this.genreRepository = genreRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     public SaveCoverResponse saveCoverToBook(String bookHash, MultipartFile bookCover) {
@@ -60,6 +71,18 @@ public class CreateBookFromClientService {
     
     public CreateBookResponse createBookFromClient(BookFromClientShell bookFromClientShell) {
         Book book = getBook(bookFromClientShell);
+
+        Optional<Genre> genre = genreRepository.findById(Long.valueOf(bookFromClientShell.getGenre()));
+        if (genre.isEmpty()) {
+            return new CreateBookResponse("Такой жанр не найден", "WRONG_GENRE", null);
+        }
+        book.setGenre(genre.get());
+
+        Optional<Publisher> publisher = publisherRepository.findById(Long.valueOf(bookFromClientShell.getPublisher()));
+        if (publisher.isEmpty()) {
+            return new CreateBookResponse("Такое издательство не найдено", "WRONG_PUBLISHER", null);
+        }
+        book.setPublisher(publisher.get());
         book = bookRepository.save(book);
 
         // TODO - id в hash
@@ -82,8 +105,7 @@ public class CreateBookFromClientService {
 
         // TODO 5 - заменить как только добавятся связи в БД
         book.setAuthors(bookFromClientShell.getAuthors());
-        book.setPublisher(bookFromClientShell.getPublisher());
-        book.setGenre(bookFromClientShell.getGenre());
+
         return book;
     }
 

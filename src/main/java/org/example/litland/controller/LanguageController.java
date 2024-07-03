@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/language")
 public class LanguageController {
-    private Map<Language, String> languageMapping = new HashMap<>();
+    private final Map<Language, String> languageMapping = new HashMap<>();
 
     public LanguageController() {
         languageMapping.put(Language.RU, "Русский");

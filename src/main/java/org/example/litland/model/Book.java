@@ -12,7 +12,7 @@ public class Book {
     @GeneratedValue
     private Long id;
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String name = ""; // required
 
     @Column(length = 4, nullable = false)
@@ -23,7 +23,7 @@ public class Book {
     @Column(nullable = false)
     private Float price = 0f; // required
 
-    @Column(length = 20, nullable = true)
+    @Column(length = 20)
     private String ISBNNumber;
 
     private Boolean isNew;
@@ -44,18 +44,18 @@ public class Book {
 
     private Float rating;
 
-    private String publisher;
+//    private String publisher;
 
-    private String genre;
+//    private String genre;
 
     @Column(nullable = false)
     private String authors = ""; // required
 
-//    @ManyToOne(targetEntity = Publisher.class)
-//    private Publisher publisher;
-//
-//    @ManyToOne(targetEntity = Genre.class)
-//    private Genre genre;
+    @ManyToOne(targetEntity = Publisher.class)
+    private Publisher publisher;
+
+    @ManyToOne(targetEntity = Genre.class)
+    private Genre genre;
 //
 //    @ManyToMany
 //    @JoinTable(name = "authors_books", joinColumns = @JoinColumn(name = "books_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))

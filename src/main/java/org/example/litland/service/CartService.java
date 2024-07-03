@@ -48,7 +48,8 @@ public class CartService {
                     cart.getBook().getName(),
                     cart.getBook().getAuthors(),
                     cart.getAmount(),
-                    cart.getBook().getPrice()
+                    cart.getBook().getPrice(),
+                    cart.getBook().getCoverName()
             );
             bookShells.add(bookCartShell);
         });
@@ -96,7 +97,8 @@ public class CartService {
                 checkAnswer.getBook().getName(),
                 checkAnswer.getBook().getAuthors(),
                 cartSaved.getAmount(),
-                checkAnswer.getBook().getPrice()
+                checkAnswer.getBook().getPrice(),
+                checkAnswer.getBook().getCoverName()
         );
 
         return new BookCartResponse(bookCartShell, "Книга добавлена в корзину", "SUCCESS");
@@ -112,7 +114,7 @@ public class CartService {
             return new BookCartResponse(null, "Книги нет в корзине", "BOOK_NOT_IN_CART");
 
         if (checkAnswer.getBook().getStorageAmount() == null)
-            return new BookCartResponse(null, "Книга электронная", "BOOK_IS_DIGITAL");
+            return new BookCartResponse(null, "Книга электронная. Больше добавить нельзя", "BOOK_IS_DIGITAL");
 
         if (checkAnswer.getBook().getStorageAmount() < cartExist.get().getAmount() + 1)
             return new BookCartResponse(null, "На складе нет больше книг", "STORAGE_DONT_HAVE_THIS_AMOUNT_BOOK");
@@ -130,7 +132,8 @@ public class CartService {
                 checkAnswer.getBook().getName(),
                 checkAnswer.getBook().getAuthors(),
                 cartUpdated.getAmount(),
-                checkAnswer.getBook().getPrice()
+                checkAnswer.getBook().getPrice(),
+                checkAnswer.getBook().getCoverName()
         );
 
         return new BookCartResponse(bookCartShell, "Книга добавлена в корзину", "SUCCESS");
@@ -161,7 +164,8 @@ public class CartService {
                 checkAnswer.getBook().getName(),
                 checkAnswer.getBook().getAuthors(),
                 cartUpdated.getAmount(),
-                checkAnswer.getBook().getPrice()
+                checkAnswer.getBook().getPrice(),
+                checkAnswer.getBook().getCoverName()
         );
 
         return new BookCartResponse(bookCartShell, "Книга убрана из корзины", "SUCCESS");

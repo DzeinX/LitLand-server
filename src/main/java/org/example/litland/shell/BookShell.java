@@ -1,6 +1,7 @@
 package org.example.litland.shell;
 
 import lombok.Data;
+import org.example.litland.model.Genre;
 import org.example.litland.model.Language;
 
 @Data
@@ -31,9 +32,9 @@ public class BookShell {
 
     private Float rating;
 
-    private String publisher;
+    private PublisherShell publisher;
 
-    private String genre;
+    private GenreShell genre;
 
     private String authors;
 }

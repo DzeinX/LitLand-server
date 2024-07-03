@@ -32,21 +32,21 @@ public class CartController {
         return cartService.addNewBook(userHash, bookInfoForCart.getHash());
     }
 
-    @PostMapping("/add-one")
+    @PutMapping("/add-one")
     @CrossOrigin(origins = "http://localhost:3000")
     public BookCartResponse addOneBookInCart(@RequestBody BookInfoForCart bookInfoForCart) {
         String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять
         return cartService.addOneBook(userHash, bookInfoForCart.getHash());
     }
 
-    @PostMapping("/remove-one")
+    @PutMapping("/remove-one")
     @CrossOrigin(origins = "http://localhost:3000")
     public BookCartResponse removeOneBookFromTheCart(@RequestBody BookInfoForCart bookInfoForCart) {
         String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять
         return cartService.removeOneBook(userHash, bookInfoForCart.getHash());
     }
 
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     @CrossOrigin(origins = "http://localhost:3000")
     public BookCartResponse removeBookFromTheCart(@RequestBody BookInfoForCart bookInfoForCart) {
         String userHash = "1"; // TODO 4 - при добавлении Spring Security поменять

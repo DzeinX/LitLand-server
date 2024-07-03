@@ -1,12 +1,11 @@
 package org.example.litland.controller;
 
-import org.example.litland.model.Book;
-import org.example.litland.repository.BookRepository;
 import org.example.litland.response.BookResponse;
 import org.example.litland.service.BookToClientService;
 import org.example.litland.shell.BookShell;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,10 +18,18 @@ public class BookController {
         this.bookToClientService = bookToClientService;
     }
 
-    @GetMapping("/")
+    @GetMapping(path="/", params={"page", "size"})
     @CrossOrigin(origins = "http://localhost:3000")
-    public List<BookShell> getAllBooks() {
-        return bookToClientService.getAllBooksToClient();
+    public List<BookShell> getAllBooks(@RequestParam int page, @RequestParam int size) {
+        if (size <= 0) return new ArrayList<>();
+        return bookToClientService.getAllBooksToClientPaginated(page, size);
+    }
+
+    @GetMapping(path="/book/amount-pages", params={"size"})
+    @CrossOrigin(origins = "http://localhost:3000")
+    public int getAmountPages(@RequestParam int size) {
+        if (size <= 0) return -1;
+        return bookToClientService.getBooksAmountPages(size);
     }
 
     @GetMapping("/book/{hash}")

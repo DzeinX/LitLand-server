@@ -1,9 +1,15 @@
 package org.example.litland.service;
 
 import org.example.litland.model.Book;
+import org.example.litland.model.Genre;
 import org.example.litland.repository.BookRepository;
+import org.example.litland.repository.GenreRepository;
 import org.example.litland.response.BookResponse;
 import org.example.litland.shell.BookShell;
+import org.example.litland.shell.GenreShell;
+import org.example.litland.shell.PublisherShell;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +21,11 @@ public class BookToClientService {
     private final BookRepository bookRepository;
 
     private final String SECRET_VALUE = "jhlska8275098hshd00827"; // TODO 1 - закодировать с помощью SECRET_VALUE
+    private final GenreRepository genreRepository;
 
-    public BookToClientService(BookRepository bookRepository) {
+    public BookToClientService(BookRepository bookRepository, GenreRepository genreRepository) {
         this.bookRepository = bookRepository;
+        this.genreRepository = genreRepository;
     }
 
     public boolean checkIfExist(Long id) {
@@ -50,8 +58,8 @@ public class BookToClientService {
         bookShell.setDescription(book.getDescription());
         bookShell.setPublicationYear(book.getPublicationYear());
         bookShell.setRating(book.getRating());
-        bookShell.setPublisher(book.getPublisher());
-        bookShell.setGenre(book.getGenre());
+        bookShell.setPublisher(new PublisherShell(book.getId().toString(), book.getPublisher().getName()));
+        bookShell.setGenre(new GenreShell(book.getId().toString(), book.getGenre().getName()));
         bookShell.setAuthors(book.getAuthors());
         bookShell.setCoverName(book.getCoverName());
 
@@ -67,6 +75,21 @@ public class BookToClientService {
         });
 
         return bookShells;
+    }
+
+    public List<BookShell> getAllBooksToClientPaginated(int number, int size) {
+        List<BookShell> bookShells = new ArrayList<>();
+        Pageable page = PageRequest.of(number, size);
+        bookRepository.findAll(page).forEach(book -> {
+            bookShells.add(getBookShellFromBookEntity(book));
+        });
+
+        return bookShells;
+    }
+
+    public int getBooksAmountPages(int size) {
+        Pageable page = PageRequest.of(0, size);
+        return bookRepository.findAll(page).getTotalPages();
     }
 
     public BookResponse getBookToClientFromHash(String Hash) {
