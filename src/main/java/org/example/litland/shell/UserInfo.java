@@ -3,7 +3,6 @@ package org.example.litland.shell;
 import lombok.Data;
 
 @Data
-public class BookInfoForCart {
-    private String hash;
+public class UserInfo {
     private String userId;
 }

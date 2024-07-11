@@ -1,13 +1,13 @@
 package org.example.litland.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Date;
 
 @Entity
 @Data
+@Table(name = "CARTS")
 public class Cart {
     @Id
     @GeneratedValue
@@ -16,10 +16,15 @@ public class Cart {
     @ManyToOne(targetEntity = Book.class)
     private Book book;
 
+    @ManyToOne(targetEntity = Order.class)
+    private Order order;
+
     @ManyToOne(targetEntity = User.class)
     private User user;
 
     private int amount = 1;
-
     private CartStatus status;
+    private Date datePurchasing;
+    private Date dateAddingToCart = new Date();
+    private Date dateGetting;
 }

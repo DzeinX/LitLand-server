@@ -79,6 +79,9 @@ public class LitLandApplication {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        user.setRole(Role.ROLE_USER);
+        user.setBlocked(false);
+
         userRepository.save(user);
     }
 

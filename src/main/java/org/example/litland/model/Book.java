@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 @Entity
 @Data
+@Table(name="BOOKS")
 public class Book {
     @Id
     @GeneratedValue
