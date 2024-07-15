@@ -83,6 +83,9 @@ public class CartService {
         Optional<Cart> cartExist = cartRepository.findByUserIdAndBookIdAndStatus(Long.parseLong(userHash), Long.parseLong(bookHash), CartStatus.IN_CART);
         if (cartExist.isPresent()) return new BookCartResponse(null, "Книга уже в корзине", "BOOK_IN_CART");
 
+        if (checkAnswer.getBook().getStorageAmount() < 1)
+            return new BookCartResponse(null, "На складе нет больше книг", "STORAGE_DONT_HAVE_THIS_AMOUNT_BOOK");
+
         Cart cartSaved;
         try {
             Cart cart = new Cart();

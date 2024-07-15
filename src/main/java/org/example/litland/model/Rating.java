@@ -5,11 +5,12 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "RATING")
+@Table(name = "RATINGS")
 public class Rating {
     @Id
     @GeneratedValue
     private Long id;
+    private int mark;
 
     @ManyToOne(targetEntity = User.class)
     private User user;
